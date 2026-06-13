@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Video</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">prime video</div>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-item">Home</a></li>
+                <li><a href="#" class="nav-item">Free to me</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-item">Movies <i class="fa-solid fa-chevron-down"></i></a>
+                    <div class="dropdown-content movies-menu glass-panel">
+                        <div class="movies-menu-inner">
+                            <div class="menu-section">
+                                <h3>Genres</h3>
+                                <div class="menu-columns">
+                                    <div class="menu-column">
+                                        <a href="#">Action and adventure</a>
+                                        <a href="#">Anime</a>
+                                        <a href="#">Comedy</a>
+                                        <a href="#">Documentary</a>
+                                        <a href="#">Drama</a>
+                                        <a href="#">Fantasy</a>
+                                        <a href="#">Horror</a>
+                                        <a href="#">Kids</a>
+                                    </div>
+                                    <div class="menu-column">
+                                        <a href="#">Mystery and thrillers</a>
+                                        <a href="#">Romance</a>
+                                        <a href="#">Science fiction</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="menu-divider"></div>
+                            <div class="menu-section">
+                                <h3>Featured collections</h3>
+                                <div class="menu-column">
+                                    <a href="#">Home Premiere</a>
+                                    <a href="#">New Releases</a>
+                                    <a href="#">MX Player</a>
+                                    <a href="#">Critically acclaimed</a>
+                                    <a href="#">Kids</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#" class="nav-item">TV shows</a></li>
+                <li><a href="#" class="nav-item">Live TV</a></li>
+                <li class="nav-separator">|</li>
+                <li>
+                    <a href="#" class="nav-item subscriptions-link">
+                        <span class="subs-icon" aria-hidden="true">
+                            <span></span><span></span><span></span><span></span>
+                        </span>
+                        Subscriptions
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="hamburger">
+            <a href="#" class="nav-item menu-toggle">Menu <i class="fa-solid fa-chevron-down"></i></a>
+        </div>
+
+        <div class="nav-right">
+            <i class="fa-solid fa-magnifying-glass icon" aria-label="Search"></i>
+            <div class="dropdown dropdown-right">
+                <a href="#" class="nav-item lang-trigger">EN <i class="fa-solid fa-chevron-down"></i></a>
+                <div class="dropdown-content language-menu glass-panel">
+                    <div class="lang-col">
+                        <a href="#">English</a><a href="#">हिन्दी</a><a href="#">தமிழ்</a>
+                        <a href="#">తెలుగు</a><a href="#">Deutsch</a><a href="#">Français</a>
+                    </div>
+                    <div class="lang-col">
+                        <a href="#">Español</a><a href="#">Italiano</a><a href="#">日本語</a>
+                        <a href="#">한국어</a><a href="#">简体中文</a><a href="#">繁體中文</a>
+                    </div>
+                </div>
+            </div>
+            <button class="icon-btn apps-btn" aria-label="Apps">
+                <span class="apps-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+            </button>
+            <div class="dropdown dropdown-right">
+                <button class="profile-btn" aria-label="Your account"><i class="fa-solid fa-user"></i></button>
+                <div class="dropdown-content profile-menu glass-panel">
+                    <h4>Your account</h4>
+                    <a href="#">Sign in</a>
+                    <a href="#">Help</a>
+                    <a href="#">Watch anywhere</a>
+                </div>
+            </div>
+            <button class="join-btn">Join Prime</button>
+        </div>
+    </nav>
+
+    <main class="landing-page">
+
+        <!-- SECTION 1: Welcome to Prime Video -->
+        <section class="landing-section section-welcome">
+            <div class="section-left">
+                <div class="section-content">
+                    <h1 style="font-size: 43px;">Welcome to Prime Video</h1><br>
+                    <p style="font-size: 20px;">Watch the latest movies, TV shows, and award-winning Amazon Originals</p>
+                    <button class="cta-btn cta-white">Join Prime Lite at ₹799/year</button><br><br>
+                    <p style="font-size: 15px; ">Effectively ₹67/month</p>
+                    <button class="cta-btn cta-white">Join Prime Annual at ₹1,499/year</button><br><br>
+                    <p style="font-size: 15px; outline-color: ghostwhite;">Effectively ₹125/month</p>
+                     <button class="cta-btn cta-white">Join Prime Monthly at ₹299/year</button><br><br>
+                     <button class="cta-btn cta-white">Compare All Plans</button><br><br>
+                    
+
+                </div>
+            </div>
+            <div class="section-visual visual-welcome" aria-hidden="true"></div>
+            <div class="section-fade"></div>
+        </section>
+
+        <!-- SECTION 2: Movie rentals -->
+        <section class="landing-section section-rentals">
+            <div class="section-left">
+                <div class="section-content">
+                    <h1>Movie rentals on Prime Video</h1>
+                    <p>Early Access to new movies, before digital subscription</p>
+                    <button class="cta-btn cta-pill">Rent now</button>
+                </div>
+            </div>
+            <div class="section-visual visual-rentals" aria-hidden="true"></div>
+            <div class="section-fade"></div>
+        </section>
+
+        <!-- SECTION 3: Subscriptions -->
+        <section class="landing-section section-subscriptions">
+            <div class="section-left">
+                <div class="section-content">
+                    <h1>Your favorite subscriptions all in one place</h1>
+                    <p>Customers can subscribe to get access to a variety of premium and specialty content, easily accessible within the Prime Video app</p>
+                </div>
+            </div>
+            <div class="section-visual visual-subs">
+                <div class="subs-grid">
+                    <button type="button" class="subs-tile tile-appletv">
+                        <i class="fa-brands fa-apple"></i>
+                        <span class="appletv-text">tv</span>
+                    </button>
+                    <button type="button" class="subs-tile tile-moviesphere">
+                        <span class="ms-top">MOVIE</span>
+                        <span class="ms-bottom">SPHERE+</span>
+                    </button>
+                    <button type="button" class="subs-tile tile-lionsgate">
+                        <span class="lg-top">LIONSGATE</span>
+                        <span class="lg-bottom">PLAY</span>
+                    </button>
+                    <button type="button" class="subs-tile tile-goldmines">
+                        <span class="gm-brand">GOLDMINES</span>
+                        <span class="gm-play">Play</span>
+                    </button>
+                    <button type="button" class="subs-tile tile-anime">
+                        <i class="fa-solid fa-play anime-icon"></i>
+                        <span class="anime-text">Anime Times</span>
+                    </button>
+                    <button type="button" class="subs-tile tile-manorama">
+                        <span class="mm-brand">manorama<span class="mm-max">MAX</span></span>
+                    </button>
+                    <button type="button" class="subs-tile tile-chaupal">
+                        <span class="chaupal-text">CHAUPAL</span>
+                    </button>
+                    <button type="button" class="subs-tile tile-bbc">
+                        <div class="bbc-blocks">
+                            <span>B</span><span>B</span><span>C</span>
+                        </div>
+                        <span class="bbc-player">PLAYER</span>
+                    </button>
+                    <button type="button" class="subs-tile tile-nba">
+                        <span class="nba-logo">NBA</span>
+                        <span class="nba-pass">League Pass</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-logo">prime video</div>
+            <ul class="footer-links">
+                <li><a href="#">Terms and Privacy Notice</a></li>
+                <li><a href="#">Send us feedback</a></li>
+                <li><a href="#">Help</a></li>
+            </ul>
+            <p class="footer-copy">© 1996-2026, Amazon.com, Inc. or its affiliates</p>
+        </div>
+    </footer>
+
+</body>
+</html>
