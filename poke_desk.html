@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input id="pokiname" placeholder="enter a poki name" />
+
+    <button onclick="pokidata()">search</button>
+
+
+    <img src="" id="pokiimg" />
+
+    <h4 id="pokinameDisplay"></h4>
+
+    <script>
+     async function pokidata(params) {
+        
+        try{
+             
+            const pokiname = document.getElementById("pokiname").value
+            
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokiname}`)
+            
+            if(!response.ok){
+    throw new Error("data fetch is failed")
+            }
+
+           const data = await response.json();
+
+           const pokisprites = data.sprites.front_default;
+          const imgelement = document.getElementById("pokiimg")
+          const nameElement = document.getElementById("pokinameDisplay")
+
+          imgelement.src = pokisprites;
+          nameElement.textContent = data.name;
+
+        }catch(err){
+
+        }
+     }
+        
+    </script>
+</body>
+</html>

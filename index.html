@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Prime Video Task</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#00050d;
+    color:white;
+}
+
+nav{
+    background:#00050d;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 50px;
+    position:sticky;
+    top:0;
+}
+
+.logo h2{
+    font-size:30px;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:30px;
+}
+
+nav ul li a{
+    text-decoration:none;
+    color:white;
+    font-size:18px;
+}
+
+.nav-icons{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.nav-icons button{
+    background:#1a98ff;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.hero-section,
+.rental-section,
+.subscription-section{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    min-height:100vh;
+}
+
+.hero-left,
+.rental-left,
+.subscription-left{
+    width:45%;
+    padding:70px;
+}
+
+.hero-left h1,
+.rental-left h1,
+.subscription-left h1{
+    font-size:48px;
+    margin-bottom:30px;
+}
+
+.hero-left p,
+.rental-left p,
+.subscription-left p{
+    font-size:28px;
+    line-height:1.5;
+    margin-bottom:40px;
+}
+
+.hero-left button,
+.rental-left button{
+    padding:18px 35px;
+    font-size:22px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+
+}
+
+.hero-right,
+.rental-right{
+    width:55%;
+}
+
+.hero-right img,
+.rental-right img{
+    width:100%;
+    height:100vh;
+    object-fit:cover;
+}
+
+.subscription-right{
+    width:55%;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    padding:50px;
+}
+
+.channel-card{
+    border-radius:15px;
+    overflow:hidden;
+    transition:0.3s;
+}
+
+.channel-card:hover{
+    transform:scale(1.05);
+}
+
+.channel-card img{
+    width:100%;
+    display:block;
+}
+
+footer{
+    background:#222;
+    text-align:center;
+    padding:40px;
+}
+
+.footer-logo h2{
+    font-size:40px;
+    margin-bottom:20px;
+}
+
+.footer-links{
+    margin-bottom:20px;
+}
+
+.footer-links a{
+    color:#4ea3ff;
+    text-decoration:none;
+    margin:0 15px;
+    font-size:18px;
+}
+
+footer p{
+    color:#999;
+    font-size:18px;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+    <nav>
+        <div class="logo">
+            <h2>prime video</h2>
+        </div>
+
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Free to me</a></li>
+            <li><a href="#">Movies</a></li>
+            <li><a href="#">TV Shows</a></li>
+            <li><a href="#">Live TV</a></li>
+            <li><a href="#">Subscriptions</a></li>
+        </ul>
+
+        <div class="nav-icons">
+            <span>Search</span>
+            <span>
+                <details>
+                    <summary>EN</summary>
+                    
+                </details>
+            </span>
+            <span>Apps</span>
+            <span>Profile</span>
+            <button>Join Prime</button>
+        </div>
+    </nav>
+</header>
+
+<section class="hero-section">
+
+    <div class="hero-left">
+        <h1>Welcome to Prime Video</h1>
+
+        <p>
+            Watch the latest movies, TV shows, and award-winning Amazon Originals
+        </p>
+
+        <button>Sign in to join Prime</button>
+    </div>
+
+    <div class="hero-right">
+        <img src="https://m.media-amazon.com/images/G/31/AmazonVideo/2019/MLP.jpg" alt="">
+    </div>
+
+</section>
+
+<section class="rental-section">
+
+    <div class="rental-left">
+        <h1>Movie rentals on Prime Video</h1>
+
+        <p>
+            Early Access to new movies,
+            before digital subscription
+        </p>
+
+        <button>Rent now</button>
+    </div>
+
+    <div class="rental-right">
+        <img src="https://m.media-amazon.com/images/G/31/AmazonVideo/2021/X-site/MLP/TVOD/TVOD_MLP_Right._SX1440_CR575,0,865,675_QL80_AC_FP_.jpg" alt="">
+    </div>
+
+</section>
+
+<section class="subscription-section">
+
+    <div class="subscription-left">
+
+        <h1>
+            Your favorite subscriptions
+            all in one place
+        </h1>
+
+        <p>
+            Customers can subscribe to get access to a variety
+            of premium and specialty content, easily accessible
+            within the Prime Video app
+        </p>
+
+    </div>
+
+    <div class="subscription-right">
+
+        <div class="channel-card">
+            <img src="image(285).png" alt="">
+        </div>
+
+        <div class="channel-card">
+            <img src="image(285).png" alt="">
+        </div>
+
+        <div class="channel-card">
+            <img src="image(285).png" alt="">
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <div class="footer-logo">
+        <h2>prime video</h2>
+    </div>
+
+    <div class="footer-links">
+        <a href="#">Terms and Privacy Notice</a>
+        <a href="#">Send us feedback</a>
+        <a href="#">Help</a>
+    </div>
+
+    <p>©️ 1996-2026, Amazon.com, Inc. or its affiliates</p>
+
+</footer>
+
+</body>
+</html>

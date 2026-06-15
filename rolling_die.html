@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+
+    /* center everything on the page */
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+
+    /* the dice box — using CSS grid to place dots */
+    .dice {
+      width: 120px;
+      height: 120px;
+      border: 3px solid black;
+      border-radius: 16px;
+      display: grid;
+
+      /* 3x3 grid with named areas — dots will slot into these */
+      grid-template-areas:
+        "a . c"
+        "e g f"
+        "d . b";
+
+      padding: 14px;
+      gap: 4px;
+      cursor: pointer;
+      box-sizing: border-box;
+    }
+
+    /* each dot is a small black circle */
+    .dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: black;
+    }
+
+    /* place each dot into its named grid slot */
+    .dot.a { grid-area: a; }
+    .dot.b { grid-area: b; }
+    .dot.c { grid-area: c; }
+    .dot.d { grid-area: d; }
+    .dot.e { grid-area: e; align-self: center; }   /* vertically center in middle row */
+    .dot.f { grid-area: f; align-self: center; }
+    .dot.g { grid-area: g; justify-self: center; align-self: center; } /* center dot */
+
+    /* rolling animation — spins 360 and shrinks in the middle */
+    @keyframes roll {
+      0%   { transform: rotate(0deg)   scale(1);   }  /* start: normal */
+      30%  { transform: rotate(180deg) scale(0.5); }  /* mid: half size, half spin */
+      100% { transform: rotate(360deg) scale(1);   }  /* end: full spin, back to normal */
+    }
+
+    /* class we add/remove to trigger the animation */
+    .rolling {
+      animation: roll 0.5s ease;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- the dice — clicking it calls rollDice() -->
+  <div class="dice" id="dice" onclick="rollDice()"></div>
+
+  <!-- shows the result text below the dice -->
+  <p id="result">click to roll</p>
+
+  <script>
+
+    // dot positions for each face number (1 to 6)
+    // each letter matches a named area in the CSS grid
+    // grid layout:
+    //   a  .  c
+    //   e  g  f
+    //   d  .  b
+    const layouts = {
+      1: ['g'],                          // 1 dot — center
+      2: ['a', 'b'],                     // 2 dots — top-left, bottom-right
+      3: ['a', 'g', 'b'],               // 3 dots — diagonal
+      4: ['a', 'c', 'd', 'b'],          // 4 dots — all corners
+      5: ['a', 'c', 'g', 'd', 'b'],    // 5 dots — corners + center
+      6: ['a', 'c', 'e', 'f', 'd', 'b'] // 6 dots — two columns
+    };
+
+    // draws the correct dots on the dice for a given number
+    function drawFace(num) {
+      const dice = document.getElementById('dice');
+
+      dice.innerHTML = '';  // clear previous dots
+
+      // loop through each position for this face number
+      layouts[num].forEach(function(pos) {
+        const dot = document.createElement('div'); // create a dot <div>
+        dot.className = 'dot ' + pos;             // e.g. "dot a", "dot g"
+        dice.appendChild(dot);                    // add it inside the dice
+      });
+    }
+
+    // called every time the user clicks the dice
+    function rollDice() {
+      const num = Math.floor(Math.random() * 6) + 1; // random number 1 to 6
+      const dice = document.getElementById('dice');
+
+      dice.classList.remove('rolling'); // remove animation class if already there
+      void dice.offsetWidth;            // force browser to reset — without this,
+                                        // clicking again won't re-trigger animation
+      dice.classList.add('rolling');    // add animation class to start the spin
+
+      drawFace(num);  // draw dots for the rolled number
+
+      // update the text below the dice
+      document.getElementById('result').textContent = 'you rolled a ' + num;
+    }
+
+    // show face 1 when page first loads
+    drawFace(1);
+
+  </script>
+
+</body>
+</html>
