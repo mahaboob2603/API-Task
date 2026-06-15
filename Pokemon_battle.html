@@ -1,0 +1,241 @@
+# Pokémon Battle Game (HTML + CSS + JavaScript)
+
+Save this entire code as **index.html** and open it in a browser.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pokemon Battle Arena</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eeeeee;
+            text-align: center;
+        }
+
+        .container {
+            width: 900px;
+            margin: auto;
+            background: white;
+            border: 2px solid gray;
+            padding: 20px;
+        }
+
+        .arena {
+            border: 2px solid gray;
+            height: 350px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .pokemon {
+            position: absolute;
+            width: 250px;
+        }
+
+        .top {
+            top: 20px;
+            right: 50px;
+        }
+
+        .bottom {
+            bottom: 20px;
+            left: 50px;
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+        }
+
+        .hp {
+            background: lightgreen;
+            padding: 5px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #log {
+            width: 650px;
+            height: 100px;
+            border: 2px solid gray;
+            text-align: left;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Pokemon Battle Arena</h1>
+
+    <div class="arena">
+
+        <div class="pokemon top">
+            <h2 id="name1">Pokemon 1</h2>
+            <span class="hp">
+                HP: <span id="hp1">100</span>
+            </span>
+            <br><br>
+
+            <img id="img1" src="">
+        </div>
+
+        <div class="pokemon bottom">
+            <h2 id="name2">Pokemon 2</h2>
+            <span class="hp">
+                HP: <span id="hp2">100</span>
+            </span>
+            <br><br>
+
+            <img id="img2" src="">
+        </div>
+
+    </div>
+
+    <div class="controls">
+
+        <div id="log">
+            Click Start Battle!
+        </div>
+
+        <button onclick="startBattle()">
+            Start Battle!
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+const pokemons = [
+
+    {
+        name: "Pikachu",
+        hp: 100,
+        image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+    },
+
+    {
+        name: "Charmander",
+        hp: 100,
+        image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"
+    },
+
+    {
+        name: "Bulbasaur",
+        hp: 100,
+        image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
+    },
+
+    {
+        name: "Squirtle",
+        hp: 100,
+        image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
+    },
+
+    {
+        name: "Pidgey",
+        hp: 100,
+        image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/16.png"
+    },
+
+    {
+        name: "Diglett",
+        hp: 100,
+        image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png"
+    }
+
+];
+
+function getRandomPokemon() {
+    return JSON.parse(
+        JSON.stringify(
+            pokemons[
+                Math.floor(Math.random() * pokemons.length)
+            ]
+        )
+    );
+}
+
+function startBattle() {
+
+    let p1 = getRandomPokemon();
+    let p2 = getRandomPokemon();
+
+    while (p1.name === p2.name) {
+        p2 = getRandomPokemon();
+    }
+
+    document.getElementById("name1").innerText = p1.name;
+    document.getElementById("img1").src = p1.image;
+    document.getElementById("hp1").innerText = p1.hp;
+
+    document.getElementById("name2").innerText = p2.name;
+    document.getElementById("img2").src = p2.image;
+    document.getElementById("hp2").innerText = p2.hp;
+
+    document.getElementById("log").innerHTML =
+        p1.name + " vs " + p2.name + "<br>";
+
+    let battle = setInterval(() => {
+
+        let damage1 =
+            Math.floor(Math.random() * 20) + 1;
+
+        let damage2 =
+            Math.floor(Math.random() * 20) + 1;
+
+        p2.hp -= damage1;
+        p1.hp -= damage2;
+
+        if (p1.hp < 0) p1.hp = 0;
+        if (p2.hp < 0) p2.hp = 0;
+
+        document.getElementById("hp1").innerText = p1.hp;
+        document.getElementById("hp2").innerText = p2.hp;
+
+        document.getElementById("log").innerHTML +=
+            p1.name + " hits " + p2.name +
+            " for " + damage1 + " damage.<br>" +
+
+            p2.name + " hits " + p1.name +
+            " for " + damage2 + " damage.<br><br>";
+
+        if (p1.hp <= 0 || p2.hp <= 0) {
+
+            clearInterval(battle);
+
+            let winner =
+                p1.hp > p2.hp ? p1.name : p2.name;
+
+            document.getElementById("log").innerHTML +=
+                "<h3>🏆 " + winner + " Wins!</h3>";
+        }
+
+    }, 1000);
+}
+
+</script>
+
+</body>
+</html>
+```
