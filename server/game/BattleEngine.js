@@ -47,10 +47,10 @@ function getMovesForPokemon(types) {
 }
 
 function buildBattlePokemon(pokemon) {
-  const hpStat = pokemon.stats?.find(s => s.name === 'hp')?.value || 100;
-  const atkStat = pokemon.stats?.find(s => s.name === 'attack')?.value || 50;
-  const defStat = pokemon.stats?.find(s => s.name === 'defense')?.value || 50;
-  const spdStat = pokemon.stats?.find(s => s.name === 'speed')?.value || 50;
+  const hpStat = pokemon.stats?.hp || 100;
+  const atkStat = pokemon.stats?.attack || 50;
+  const defStat = pokemon.stats?.defense || 50;
+  const spdStat = pokemon.stats?.speed || 50;
 
   const maxHp = Math.floor(hpStat * 2 + 50); // Simplified HP formula
 

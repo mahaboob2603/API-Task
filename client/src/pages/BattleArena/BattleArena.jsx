@@ -53,63 +53,65 @@ export default function BattleArena() {
   useEffect(() => {
     if (!socket) return;
 
-    socket.on('queueStatus', (msg) => {
-      console.log('Queue Status:', msg);
+    socket.on('matchStatus', (msg) => {
+      console.log('Match Status:', msg);
+      if (msg.status === 'cancelled') {
+        setGameState('LOBBY');
+      }
     });
 
     socket.on('matchFound', (data) => {
       console.log('Match Found:', data);
       setRoomId(data.roomId);
-      const opp = data.players.find(p => p.id !== socket.id);
-      setOpponent(opp);
+      setOpponent(data.opponent); // this is a string name
       setGameState('BATTLE');
-      setBattleLogs(prev => [...prev, `Match found against ${opp.name || 'Opponent'}!`]);
+      setBattleState(data.state);
+      setBattleLogs(prev => [...prev, `Match found against ${data.opponent || 'Opponent'}!`]);
     });
 
     socket.on('battleStart', (data) => {
-      console.log('Battle Start:', data);
-      setBattleState(data.state);
-      setBattleLogs(prev => [...prev, 'Battle has started!']);
+      // Not actually emitted by backend anymore, it uses matchFound
     });
 
-    socket.on('actionRegistered', () => {
+    socket.on('actionConfirmed', () => {
       setWaitingForTurn(true);
       setBattleLogs(prev => [...prev, 'Waiting for opponent...']);
     });
 
     socket.on('turnResult', (data) => {
       console.log('Turn Result:', data);
-      setBattleState(data.updatedState);
-      setBattleLogs(prev => [...prev, ...data.logs]);
+      setBattleState(data.state);
+      
+      const newLogs = data.results.map(r => r.message).filter(Boolean);
+      setBattleLogs(prev => [...prev, ...newLogs]);
       setWaitingForTurn(false);
+      
+      if (data.state.status === 'finished') {
+         setWinner(data.state.winner);
+         setGameState('GAMEOVER');
+      }
     });
 
     socket.on('switchComplete', (data) => {
       console.log('Switch Complete:', data);
-      setBattleState(data.updatedState);
-      setBattleLogs(prev => [...prev, `Player switched Pokemon!`]);
+      setBattleState(data.state);
+      setBattleLogs(prev => [...prev, `A switch occurred.`]);
     });
 
-    socket.on('battleOver', (data) => {
-      setWinner(data.winnerId);
-      setGameState('GAMEOVER');
-      setBattleLogs(prev => [...prev, data.winnerId === socket.id ? 'You won the battle!' : 'You lost the battle!']);
-    });
-
-    socket.on('opponentDisconnected', () => {
-      setBattleLogs(prev => [...prev, 'Opponent disconnected. You win!']);
-      setWinner(socket.id);
+    socket.on('opponentDisconnected', (data) => {
+      setBattleLogs(prev => [...prev, data.message || 'Opponent disconnected. You win!']);
+      setWinner(socket.id); // Or whoever
+      setBattleState(data.state);
       setGameState('GAMEOVER');
     });
 
     return () => {
-      socket.off('queueStatus');
+      socket.off('matchStatus');
       socket.off('matchFound');
       socket.off('battleStart');
-      socket.off('actionRegistered');
+      socket.off('actionConfirmed');
       socket.off('turnResult');
       socket.off('switchComplete');
-      socket.off('battleOver');
       socket.off('opponentDisconnected');
     };
   }, [socket]);
@@ -157,9 +159,9 @@ export default function BattleArena() {
         };
       }));
 
-      socket.emit('joinQueue', {
+      socket.emit('findMatch', {
         team: teamFormat,
-        playerName: user?.displayName || user?.email || 'Trainer'
+        name: user?.displayName || user?.email || 'Trainer'
       });
     } catch (err) {
       console.error("Error preparing team for queue:", err);
@@ -169,7 +171,7 @@ export default function BattleArena() {
 
   const handleAttack = (moveIndex) => {
     if (waitingForTurn || !roomId) return;
-    socket.emit('submitAction', {
+    socket.emit('battleAction', {
       roomId,
       action: { type: 'attack', moveIndex }
     });
@@ -177,9 +179,9 @@ export default function BattleArena() {
 
   const handleSwitch = (pokemonIndex) => {
     if (waitingForTurn || !roomId) return;
-    socket.emit('submitAction', {
+    socket.emit('battleAction', {
       roomId,
-      action: { type: 'switch', pokemonIndex }
+      action: { type: 'switch', index: pokemonIndex }
     });
   };
 
@@ -248,37 +250,43 @@ export default function BattleArena() {
               {/* Opponent Side */}
               <div className="opponent-side">
                 <div className="pokemon-status">
-                  <div className="pokemon-name">{battleState.players[opponent.id].activePokemon.name}</div>
+                  <div className="pokemon-name">{battleState.opponent.activePokemon.name}</div>
                   <div className="hp-bar-container">
                     <div 
                       className="hp-bar fill" 
-                      style={{width: `${(battleState.players[opponent.id].activePokemon.hp / battleState.players[opponent.id].activePokemon.maxHp) * 100}%`}}
+                      style={{
+                        width: `${Math.max(0, (battleState.opponent.activePokemon.currentHp / battleState.opponent.activePokemon.maxHp) * 100)}%`,
+                        backgroundColor: (battleState.opponent.activePokemon.currentHp / battleState.opponent.activePokemon.maxHp) > 0.5 ? '#4caf50' : (battleState.opponent.activePokemon.currentHp / battleState.opponent.activePokemon.maxHp) > 0.2 ? '#ffc107' : '#f44336'
+                      }}
                     ></div>
                   </div>
                   <div className="hp-text">
-                    {Math.max(0, Math.floor(battleState.players[opponent.id].activePokemon.hp))} / {battleState.players[opponent.id].activePokemon.maxHp}
+                    {Math.max(0, Math.floor(battleState.opponent.activePokemon.currentHp))} / {battleState.opponent.activePokemon.maxHp}
                   </div>
                 </div>
                 <div className="pokemon-sprite">
-                  <img src={battleState.players[opponent.id].activePokemon.sprites.front_default} alt="opponent" />
+                  <img src={battleState.opponent.activePokemon.sprite} alt="opponent" />
                 </div>
               </div>
 
               {/* Player Side */}
               <div className="player-side">
                 <div className="pokemon-sprite back-sprite">
-                  <img src={battleState.players[socket.id].activePokemon.sprites.back_default || battleState.players[socket.id].activePokemon.sprites.front_default} alt="player" />
+                  <img src={battleState.player.activePokemon.sprite} alt="player" />
                 </div>
                 <div className="pokemon-status">
-                  <div className="pokemon-name">{battleState.players[socket.id].activePokemon.name}</div>
+                  <div className="pokemon-name">{battleState.player.activePokemon.name}</div>
                   <div className="hp-bar-container">
                     <div 
                       className="hp-bar fill" 
-                      style={{width: `${(battleState.players[socket.id].activePokemon.hp / battleState.players[socket.id].activePokemon.maxHp) * 100}%`}}
+                      style={{
+                        width: `${Math.max(0, (battleState.player.activePokemon.currentHp / battleState.player.activePokemon.maxHp) * 100)}%`,
+                        backgroundColor: (battleState.player.activePokemon.currentHp / battleState.player.activePokemon.maxHp) > 0.5 ? '#4caf50' : (battleState.player.activePokemon.currentHp / battleState.player.activePokemon.maxHp) > 0.2 ? '#ffc107' : '#f44336'
+                      }}
                     ></div>
                   </div>
                   <div className="hp-text">
-                    {Math.max(0, Math.floor(battleState.players[socket.id].activePokemon.hp))} / {battleState.players[socket.id].activePokemon.maxHp}
+                    {Math.max(0, Math.floor(battleState.player.activePokemon.currentHp))} / {battleState.player.activePokemon.maxHp}
                   </div>
                 </div>
               </div>
@@ -298,11 +306,11 @@ export default function BattleArena() {
                 <div className="moves-panel">
                   <h3>Moves</h3>
                   <div className="moves-grid">
-                    {battleState.players[socket.id].activePokemon.moves.map((move, i) => (
+                    {battleState.player.activePokemon.moves?.map((move, i) => (
                       <button 
                         key={i} 
                         className={`move-btn type-${move.type}`}
-                        disabled={waitingForTurn || battleState.players[socket.id].activePokemon.hp <= 0}
+                        disabled={waitingForTurn || battleState.player.activePokemon.currentHp <= 0}
                         onClick={() => handleAttack(i)}
                       >
                         {move.name}
@@ -313,14 +321,14 @@ export default function BattleArena() {
                 <div className="party-panel">
                   <h3>Party (Switch)</h3>
                   <div className="party-grid">
-                    {battleState.players[socket.id].team.map((p, i) => (
+                    {battleState.player.team.map((p, i) => (
                       <button 
                         key={i} 
-                        className={`party-btn ${p.hp <= 0 ? 'fainted' : ''} ${i === battleState.players[socket.id].activeIdx ? 'active' : ''}`}
-                        disabled={waitingForTurn || p.hp <= 0 || i === battleState.players[socket.id].activeIdx}
+                        className={`party-btn ${p.fainted ? 'fainted' : ''} ${p.name === battleState.player.activePokemon.name ? 'active' : ''}`}
+                        disabled={waitingForTurn || p.fainted || p.name === battleState.player.activePokemon.name}
                         onClick={() => handleSwitch(i)}
                       >
-                        <img src={p.sprites.front_default} alt={p.name} />
+                        <img src={p.sprite} alt={p.name} />
                         <span>{p.name}</span>
                       </button>
                     ))}
