@@ -13,6 +13,7 @@ export default function Navbar() {
     { to: '/pokedex', label: 'Pokédex', icon: '📖' },
     { to: '/teams', label: 'Team Builder', icon: '🛡️' },
     { to: '/battle', label: 'Battle Arena', icon: '⚔️' },
+    { to: '/trade', label: 'Trade Hub', icon: '🔄' },
     { to: '/types', label: 'Types', icon: '⚡' },
     { to: '/compare', label: 'Compare', icon: '📊' },
   ];
