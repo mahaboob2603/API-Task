@@ -1,0 +1,34 @@
+.type-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  font-family: var(--font-body);
+}
+
+.type-badge:hover {
+  transform: scale(1.08);
+}
+
+.type-badge--sm {
+  padding: 2px 6px;
+  font-size: 9px;
+}
+
+.type-badge--lg {
+  padding: 6px 16px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.type-badge--clickable {
+  cursor: pointer;
+}
+
+.type-badge--clickable:hover {
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}

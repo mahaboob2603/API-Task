@@ -1,0 +1,53 @@
+.stat-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.stat-bar-label {
+  color: var(--accent-green);
+  font-family: var(--font-display);
+  font-size: 8px;
+  width: 56px;
+  flex-shrink: 0;
+}
+
+.stat-bar-track {
+  flex: 1;
+  background: #222;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.stat-bar-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s ease-in-out infinite;
+  background-size: 200% 100%;
+}
+
+.stat-bar-value {
+  color: var(--text-primary);
+  font-family: var(--font-retro);
+  font-size: 16px;
+  width: 32px;
+  text-align: right;
+  flex-shrink: 0;
+}

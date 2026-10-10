@@ -1,0 +1,83 @@
+.search-bar {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.search-input-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 16px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--bg-secondary);
+  color: var(--accent-green);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 40px 12px 44px;
+  font-family: var(--font-retro);
+  font-size: 18px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 12px var(--border-glow);
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-clear {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 4px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.search-clear:hover {
+  color: var(--text-primary);
+}
+
+.search-btn {
+  background: var(--pokedex-red);
+  color: white;
+  border: 2px solid var(--pokedex-red-dark);
+  border-radius: var(--radius-md);
+  padding: 12px 24px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.search-btn:hover {
+  background: #ff2222;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--pokedex-red-glow);
+}
+
+.search-btn:active {
+  transform: translateY(0);
+}

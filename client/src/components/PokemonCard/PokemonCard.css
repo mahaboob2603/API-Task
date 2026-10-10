@@ -1,0 +1,111 @@
+.pokemon-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+}
+
+.pokemon-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  background: var(--card-color-alpha);
+  transition: height 0.3s ease;
+  z-index: 0;
+}
+
+.pokemon-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--card-color);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    0 0 20px var(--card-color-alpha);
+}
+
+.pokemon-card:hover::before {
+  height: 65%;
+}
+
+.card-pokeball-bg {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 100px;
+  height: 100px;
+  color: var(--card-color);
+  opacity: 0.5;
+  z-index: 0;
+  transition: transform 0.5s ease;
+}
+
+.pokemon-card:hover .card-pokeball-bg {
+  transform: rotate(30deg) scale(1.1);
+}
+
+.card-id {
+  position: relative;
+  z-index: 1;
+  align-self: flex-end;
+  font-family: var(--font-display);
+  font-size: 10px;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.card-sprite-container {
+  position: relative;
+  z-index: 1;
+  width: 96px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-sprite {
+  width: 96px;
+  height: 96px;
+  image-rendering: auto;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.pokemon-card:hover .card-sprite {
+  transform: scale(1.15) translateY(-4px);
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5));
+}
+
+.card-info {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-name {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.card-types {
+  display: flex;
+  gap: 4px;
+}
